@@ -16,9 +16,21 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/accueil', name: 'accueil')]
+    #[Route('/', name: 'accueil')]
     public function accueil(): Response
     {
         return $this->render('accueil.html.twig');
+    }
+
+    #[Route('/presentation', name: 'presentation')]
+    public function presentation(): Response
+    {
+        return $this->render('presentation.html.twig');
+    }
+
+    #[Route('/agences', name: 'agences')]
+    public function agences(): Response
+    {
+        return $this->render('agences.html.twig');
     }
 }

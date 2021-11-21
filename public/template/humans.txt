@@ -1,0 +1,16 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+Thomas Gossart : main author.
+https://thomgo.github.io/portfolio/
+
+# THANKS
+
+  I would like to thank Yossi Kolesnicov for his great plugin yoxview that I used for my gallerie image.
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5
+    Apache Server Configs, jQuery, Modernizr, Normalize.css
