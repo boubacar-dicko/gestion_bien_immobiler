@@ -82,7 +82,7 @@ class BienImmobilier
 
     public function __construct()
     {
-        $this->created_at = new \DateTime();
+        $this->created_at = new \DateTimeImmutable();
         $this->contrats = new ArrayCollection();
     }
 

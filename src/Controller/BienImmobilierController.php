@@ -11,12 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BienImmobilierController extends AbstractController
 {
-    #[Route('/bien/liste', name: 'bien.liste')]
+    #[Route('/', name: 'bien.liste')]
     public function index(): Response
     {
-        return $this->render('bien_immobilier/index.html.twig', [
-            'controller_name' => 'BienImmobilierController',
-        ]);
+        $em = $this->getDoctrine()->getManager();
+        $data['biens'] = $em->getRepository(BienImmobilier::class)->findAll();
+
+        return $this->render('accueil.html.twig', $data);
     }
 
     #[Route('/bien/new', name: 'bien.new')]
@@ -42,4 +43,32 @@ class BienImmobilierController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/bien/{id}', name: 'bien.edit', methods:'GET|POST')]
+    public function edit(Request $request, BienImmobilier $bi): Response
+    {
+        $form = $this->createForm(BienImmobilierType::class, $bi);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute('bien.liste');
+        }
+        return $this->render('bien_immobilier/edit.html.twig', [
+            'bi' => $bi,
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/bien/{id}', name: 'bien.delete', methods:'DELETE')]
+    public function delete(BienImmobilier $bi)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $this->em->remove($bi);
+        $this->em->flush();
+        return $this->redirectToRoute('bien.liste');
+    }
+
+
 }

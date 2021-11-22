@@ -3,7 +3,9 @@
 {% block title %}Hello BienImmobilierController!{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <div class="container mt-4">
+        <h1>Creation de Bien</h1>
+        {{ include ('bien_immobilier/__form.html.twig', {form:form, button:'Creer'})  }}
+    </div>
+
 {% endblock %}

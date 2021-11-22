@@ -16,7 +16,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'accueil')]
+    #[Route('/jsdjjs', name: 'accueil')]
     public function accueil(): Response
     {
         return $this->render('accueil.html.twig');

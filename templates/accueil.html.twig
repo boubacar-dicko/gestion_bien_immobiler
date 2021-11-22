@@ -94,8 +94,42 @@
 
         <h3 class="m-b-2">Annonces à la une</h3>
 
+
+        {% for bien in biens %}
+            <tr>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <article class="card">
+                        <div class="card-block text-xs-center head">
+                            <td><h4 class="card-title">{{ bien.nomBien }}</h4></td>
+                            <td><h6 class="card-subtitle">{{ bien.prix }} Cfa</h6></td>
+                        </div>
+                        <figure>
+                            <img src="{{ asset("template/img/house_small.jpg") }}" class="img-fluid hidden-sm-up" alt="maison bleu à vendre">
+                            <img src="{{ asset("template/img/house_medium.jpg") }}" class="img-fluid hidden-xs-down hidden-lg-up" alt="maison bleue à vendre">
+                            <img src="{{ asset("template/img/house_large.jpg") }}" class="img-fluid hidden-md-down" alt="maison bleu à vendre">
+                        </figure>
+                        <td class="card-block text-xs-center">
+                            <td> <p class="card-text">{{ bien.description }}</p></td>
+                            <figure class="description">
+                                <td><span><i class="fa fa-bed" aria-hidden="true"></i>  {{ bien.nombrePieces }} Chambres</span></td>
+                                <td><span><i class="fa fa-square" aria-hidden="true"></i>  {{ bien.surface }} m2</span></td>
+                                <td><span><i class="fa fa-tint" aria-hidden="true"></i>   {{ bien.ville }}</span></td>
+                            </figure>
+                            <a href="#" class="card-link"><i class="fa fa-eye m-r-1" aria-hidden="true"></i>Voir</a>
+                        <td><a href="{{ path('bien.edit', {id: bien.id}) }}" class="card-link"><i class="fa fa-edit m-r-1" aria-hidden="true"></i>editer</a></td>
+                        <td><form method="post" action="{{ path('bien.delete', {id: bien.id}) }}" style="display:inline-block">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form></td>
+
+                    </article>
+                </div>
+
+            </tr>
+        {% endfor %}
+
         <!-- Start the card content -->
-        <div class="row">
+        <!--div class="row">
 
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <article class="card">
@@ -166,7 +200,7 @@
                 </article>
             </div>
 
-        </div>
+        </div-->
 
     </section>
 
