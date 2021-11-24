@@ -12,6 +12,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class BienImmobilier
 {
+    const BIEN =[
+        0 => 'Immeuble',
+        1 => 'Appartement',
+        3 => 'Maison',
+        4 => 'Magasin'
+    ];
+
+    const STATUS = [
+        0 => 'A VENDRE',
+        1 => 'A LOUER'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -79,6 +91,16 @@ class BienImmobilier
      * @ORM\Column(type="datetime_immutable")
      */
     private $created_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bienImmobilier")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -255,6 +277,30 @@ class BienImmobilier
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
 }

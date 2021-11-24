@@ -51,9 +51,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $role;
 
+    /**
+     * @ORM\OneToMany(targetEntity=BienImmobilier::class, mappedBy="user")
+     */
+    private $bienImmobilier;
+
+    public function __toString()
+    {
+        return  $this->id;
+    }
+
     public function __construct()
     {
         $this->role = new ArrayCollection();
+        $this->bienImmobilier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,6 +204,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($role->getUsers() === $this) {
                 $role->setUsers(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BienImmobilier[]
+     */
+    public function getBienImmobilier(): Collection
+    {
+        return $this->bienImmobilier;
+    }
+
+    public function addBienImmobilier(BienImmobilier $bienImmobilier): self
+    {
+        if (!$this->bienImmobilier->contains($bienImmobilier)) {
+            $this->bienImmobilier[] = $bienImmobilier;
+            $bienImmobilier->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBienImmobilier(BienImmobilier $bienImmobilier): self
+    {
+        if ($this->bienImmobilier->removeElement($bienImmobilier)) {
+            // set the owning side to null (unless already changed)
+            if ($bienImmobilier->getUser() === $this) {
+                $bienImmobilier->setUser(null);
             }
         }
 

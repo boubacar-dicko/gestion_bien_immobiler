@@ -19,6 +19,29 @@ class BienImmobilierRepository extends ServiceEntityRepository
         parent::__construct($registry, BienImmobilier::class);
     }
 
+    public function findBienAvendre()
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.status=0')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBienAlouer()
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.status=1')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBienById($id)
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.user='.$id)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return BienImmobilier[] Returns an array of BienImmobilier objects
     //  */

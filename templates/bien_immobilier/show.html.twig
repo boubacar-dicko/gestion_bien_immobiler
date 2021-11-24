@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}detait Bien{% endblock %}
+
+{% block body %}
+
+    <div class="col-md-6">
+    <h1>Detail</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Nom Bien</th>
+            <td>{{ bien.nomBien }}</td>
+        </tr>
+        <tr>
+            <th>Prix Bien</th>
+            <td>{{ bien.prix }}</td>
+        </tr>
+        <tr>
+            <th>nombre de chambre</th>
+            <td>{{ bien.nombrePieces }}</td>
+        </tr>
+        <tr>
+            <th>Surface du bien</th>
+            <td>{{ bien.surface }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('bien.liste') }}">Retour à la liste des bien</a>
+    </div>
+    <div class="col-md-6">
+    <a class="btn btn-primary" href="#">Contactez l'agence</a>
+    <div id="contactForm" class="mt-4">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col">{{ form_row(form.firstName) }}</div>
+            <div class="col">{{ form_row(form.lastName) }}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{ form_row(form.phone) }}</div>
+            <div class="col">{{ form_row(form.email) }}</div>
+        </div>
+        {{ form_rest(form) }}
+        <div class="form-group">
+            <button class="btn btn-primary">Envoyer</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+    </div>
+
+
+
+{% endblock %}

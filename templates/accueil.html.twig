@@ -115,12 +115,7 @@
                                 <td><span><i class="fa fa-square" aria-hidden="true"></i>  {{ bien.surface }} m2</span></td>
                                 <td><span><i class="fa fa-tint" aria-hidden="true"></i>   {{ bien.ville }}</span></td>
                             </figure>
-                            <a href="#" class="card-link"><i class="fa fa-eye m-r-1" aria-hidden="true"></i>Voir</a>
-                        <td><a href="{{ path('bien.edit', {id: bien.id}) }}" class="card-link"><i class="fa fa-edit m-r-1" aria-hidden="true"></i>editer</a></td>
-                        <td><form method="post" action="{{ path('bien.delete', {id: bien.id}) }}" style="display:inline-block">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button class="btn btn-danger">Supprimer</button>
-                        </form></td>
+                        <td><a href="{{ path('bien.show', {id: bien.id}) }}" class="card-link"><i class="fa fa-eye m-r-1" aria-hidden="true"></i>Voir</a></td>
 
                     </article>
                 </div>
