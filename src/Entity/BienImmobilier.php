@@ -6,6 +6,7 @@ use App\Repository\BienImmobilierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BienImmobilierRepository::class)
@@ -54,11 +55,13 @@ class BienImmobilier
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=30000)
      */
     private $prix;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=1, max=5)
      */
     private $nombrePieces;
 
@@ -74,11 +77,13 @@ class BienImmobilier
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=10, max=400)
      */
     private $surface;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=0, max=10)
      */
     private $nombreEtage;
 
@@ -94,6 +99,7 @@ class BienImmobilier
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=0, max=1)
      */
     private $status;
 

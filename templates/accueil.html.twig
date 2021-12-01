@@ -45,8 +45,15 @@
             <!-- Aside with the search form -->
             <aside class="col-xs-12 col-lg-3 p-y-2" id="search_form">
                 <h3 class="m-b-1 text-xs-center"><i class="fa fa-search-plus" aria-hidden="true"></i>Vous recherchez</h3>
+                <div class="jumbotron">
+                    <div class="container">
+                        {{ form_start(form) }}
+                        <button type="submit" class="btn" id="find_button">Trouver mon bien</button>
+                        {{ form_end(form) }}
 
-                <form>
+                    </div>
+                </div>
+                <!--form>
                     <div class="form-group">
                         <select class="form-control">
                             <option>-Transaction-</option>
@@ -81,7 +88,7 @@
                         </select>
                     </div>
                     <button type="submit" class="btn" id="find_button">Trouver mon bien</button>
-                </form>
+                </form-->
 
             </aside>
         </div>
@@ -90,11 +97,11 @@
 
     <!-- Second boxed section -->
 
-    <section class="container m-t-2">
+    <section class="container mt-4">
 
         <h3 class="m-b-2">Annonces à la une</h3>
 
-
+<div class="row">
         {% for bien in biens %}
             <tr>
                 <div class="col-xs-12 col-sm-6 col-md-4">
@@ -119,10 +126,13 @@
 
                     </article>
                 </div>
-
             </tr>
         {% endfor %}
 
+</div>
+        <div class="pagination">
+            {{ knp_pagination_render(biens) }}
+        </div>
         <!-- Start the card content -->
         <!--div class="row">
 

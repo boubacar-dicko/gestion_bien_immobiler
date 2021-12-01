@@ -90,13 +90,14 @@
                         <td><span><i class="fa fa-tint" aria-hidden="true"></i>   {{ bien.ville }}</span></td>
                     </figure>
                     <td><a href="{{ path('bien.show', {id: bien.id}) }}" class="card-link"><i class="fa fa-eye m-r-1" aria-hidden="true"></i>Voir</a></td>
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
                     <td><a href="{{ path('bien.edit', {id: bien.id}) }}" class="card-link"><i class="fa fa-edit m-r-1" aria-hidden="true"></i>editer</a></td>
                 </article>
             </div>
 
         </tr>
     {% endfor %}
+
     <!--div class="row">
 
         <div class="col-xs-12 col-sm-6 col-md-4">
@@ -240,7 +241,9 @@
     </div-->
 
 </section>
-
+<td class="pagination">
+    {{ knp_pagination_render(biens) }}
+</td>
 <!--
 
 ~~~~~~~~~End of the main content~~~~~~~~~~~~~

@@ -3,26 +3,44 @@
 namespace App\Controller;
 
 use App\Entity\BienImmobilier;
+use App\Entity\BienSearch;
 use App\Entity\Contact;
 use App\Entity\User;
 use App\Form\BienImmobilierType;
+use App\Form\BienSearchType;
 use App\Form\ContactType;
 use App\Notification\ContactNotification;
+use App\Repository\BienImmobilierRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use function PHPUnit\Framework\equalTo;
+
 
 class BienImmobilierController extends AbstractController
 {
     #[Route('/', name: 'bien.liste')]
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new BienSearch();
+        $form = $this->createForm(BienSearchType::class, $search);
+        $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
-        $data['biens'] = $em->getRepository(BienImmobilier::class)->findAll();
+        $biens = $paginator->paginate(
+                        $em->getRepository(BienImmobilier::class)->findAllVisibleQuery(),
+                        $request->query->getInt('page',1),
+                        6);
 
-        return $this->render('accueil.html.twig', $data);
+        return $this->render('accueil.html.twig', [
+                'biens' => $biens,
+                'form' => $form->createView()
+            ]
+
+        );
     }
 
     #[Route('/bien/new', name: 'bien.new')]
@@ -87,7 +105,7 @@ class BienImmobilierController extends AbstractController
 
 
     #[Route('/bien/details/{id}', name: 'bien.show')]
-    public function show(BienImmobilier $bi, Request $request, ContactNotification $notification): Response
+    public function show(BienImmobilier $bi, Request $request, ContactNotification $notification, MailerInterface $mailer): Response
     {
         $contact = new Contact();
         $contact->setBienImmobilier($bi);
@@ -95,10 +113,20 @@ class BienImmobilierController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
-            $notification->notify($contact);
-           /* return $this->redirectToRoute('bien.show', [
+            //$notification->notify($contact);
+            $email = (new TemplatedEmail())
+                ->from($contact->getEmail())
+                ->to('testdickogueye@gmail.com')
+                ->subject('Message d\'un client')
+                ->htmlTemplate('email/contact.html.twig')
+                ->context([
+                    'mail' => $contact->getEmail(),
+                    'message'=> $contact->getMessage()
+                ]);
+            $mailer->send($email);
+          return $this->redirectToRoute('bien.show', [
                 'id' => $bi->getId()
-            ]);*/
+            ]);
         }
         return $this->render('bien_immobilier/show.html.twig', [
             'bien' => $bi,
@@ -108,18 +136,26 @@ class BienImmobilierController extends AbstractController
 
 
     #[Route('/vendre', name: 'bien.vendre')]
-    public function vendre(): Response
+    public function vendre(PaginatorInterface $paginator, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $data['biens'] = $em->getRepository(BienImmobilier::class)->findBienAvendre();
+        //$data['biens'] = $em->getRepository(BienImmobilier::class)->findBienAvendre();
+        $data['biens'] = $paginator->paginate(
+            $em->getRepository(BienImmobilier::class)->findBienAvendre(),
+            $request->query->getInt('page',1),
+            3);
         return $this->render('transaction/achat.html.twig', $data);
     }
 
     #[Route('/location', name: 'bien.location')]
-    public function location(): Response
+    public function location(PaginatorInterface $paginator, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $data['biens'] = $em->getRepository(BienImmobilier::class)->findBienAlouer();
+        //$data['biens'] = $em->getRepository(BienImmobilier::class)->findBienAlouer();
+        $data['biens'] = $paginator->paginate(
+            $em->getRepository(BienImmobilier::class)->findBienAlouer(),
+            $request->query->getInt('page',1),
+            3);
         return $this->render('transaction/location.html.twig', $data);
     }
 

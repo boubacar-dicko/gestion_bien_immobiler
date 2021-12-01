@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\BienImmobilier;
+use App\Entity\BienSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,16 +25,14 @@ class BienImmobilierRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->where('b.status=0')
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
     }
 
     public function findBienAlouer()
     {
         return $this->createQueryBuilder('b')
             ->where('b.status=1')
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
     }
 
     public function findBienById($id)
@@ -42,6 +42,17 @@ class BienImmobilierRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+
+    public function findAllVisibleQuery()
+    {
+        return $this->createQueryBuilder('b')
+            ->getQuery();
+
+
+    }
+
     // /**
     //  * @return BienImmobilier[] Returns an array of BienImmobilier objects
     //  */
