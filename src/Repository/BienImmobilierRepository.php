@@ -45,11 +45,29 @@ class BienImmobilierRepository extends ServiceEntityRepository
 
 
 
-    public function findAllVisibleQuery()
+    public function findAllVisibleQuery(BienSearch $search)
+    {
+        $query= $this->findQuery();
+            if($search->getMaxPrice())
+            {
+                $query = $query
+                    ->andWhere('b.prix <= :maxPrice')
+                    ->setParameter('maxPrice', $search->getMaxPrice());
+            }
+        if($search->getMinSurface())
+        {
+            $query = $query
+                ->andWhere('b.surface >= :minSurface')
+                ->setParameter('minSurface', $search->getMinSurface());
+        }
+           return $query->getQuery();
+
+    }
+
+    public function findQuery()
     {
         return $this->createQueryBuilder('b')
-            ->getQuery();
-
+            ->where('b.sold = false');
 
     }
 

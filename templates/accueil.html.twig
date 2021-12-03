@@ -48,7 +48,14 @@
                 <div class="jumbotron">
                     <div class="container">
                         {{ form_start(form) }}
-                        <button type="submit" class="btn" id="find_button">Trouver mon bien</button>
+                        <div class="form-row">
+                            {{ form_row(form.maxPrice)}}
+                        </div>
+                        <div class="form-row">
+                            {{ form_row(form.minSurface)}}
+                        </div>
+                        <button class="btn btn-primary">Rechercher</button>
+
                         {{ form_end(form) }}
 
                     </div>

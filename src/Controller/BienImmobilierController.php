@@ -31,7 +31,7 @@ class BienImmobilierController extends AbstractController
         $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
         $biens = $paginator->paginate(
-                        $em->getRepository(BienImmobilier::class)->findAllVisibleQuery(),
+                        $em->getRepository(BienImmobilier::class)->findAllVisibleQuery($search),
                         $request->query->getInt('page',1),
                         6);
 
