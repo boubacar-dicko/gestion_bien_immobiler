@@ -9,5 +9,7 @@
         {{ include ('bien_immobilier/__form.html.twig', {form:form, button:'Editer'})  }}
     </div>
 
-
+    {% block javascripts %}
+    <script src="{{ asset('/js/image.js') }}"></script>
+    {% endblock %}
 {% endblock %}

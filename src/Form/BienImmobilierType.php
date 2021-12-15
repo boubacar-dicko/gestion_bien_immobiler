@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\BienImmobilier;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,6 +28,14 @@ class BienImmobilierType extends AbstractType
             ->add('surface')
             ->add('nombreEtage')
             ->add('ville')
+            ->add('images', FileType::class,[
+                'label'=>'cliquer ici pour selectionner image',
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false
+            ])
+            ->add('latitude')
+            ->add('longitude')
         ;
     }
 
@@ -61,3 +70,4 @@ class BienImmobilierType extends AbstractType
         return $output;
     }
 }
+//my keys (AIzaSyB2_-srWmiyb4iGNgF6BY4Mv-hk8NzYUsY)

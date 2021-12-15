@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}editer le Contrat{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <h1>Editer le Contrat</h1>
+        {{ include ('contrat/__form.html.twig', {form:form, button:'Editer'})  }}
+    </div>
+
+{% endblock %}

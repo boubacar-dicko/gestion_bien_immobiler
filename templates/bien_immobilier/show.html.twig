@@ -1,55 +1,83 @@
-{% extends 'base.html.twig' %}
+{% extends 'agences.html.twig' %}
 
 {% block title %}detait Bien{% endblock %}
+{% block mapMedina %}
+     <div class="row m-t-3">
 
-{% block body %}
+            <!-- Agencies location -->
+            <div class="col-xs-12 col-sm-6">
+                <div class="" style="width: 550px; height: 450px">
+                    <div id="map"></div>
+                </div>
+            </div>
+         <div class="col-xs-12 col-sm-6">
+             {% for image in bien.images %}
+                 <div>
+                     <img src="{{ asset('/uploads/' ~ image.name) }}" class="rounded" alt="Image" width="550" height="450">
+                     <a href="{{ path('bien.delete.image', {'id': image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">Supprimer</a>
+                 </div>
+             {% endfor %}
+         </div>
+     </div>
+{% endblock %}
 
-    <div class="col-md-6">
-    <h1>Detail</h1>
+{% block contactAgence %}
+    <div class="row m-t-3">
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Nom Bien</th>
-            <td>{{ bien.nomBien }}</td>
-        </tr>
-        <tr>
-            <th>Prix Bien</th>
-            <td>{{ bien.prix }}</td>
-        </tr>
-        <tr>
-            <th>nombre de chambre</th>
-            <td>{{ bien.nombrePieces }}</td>
-        </tr>
-        <tr>
-            <th>Surface du bien</th>
-            <td>{{ bien.surface }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('bien.liste') }}">Retour à la liste des bien</a>
-    </div>
-    <div class="col-md-6">
-    <a class="btn btn-primary" href="#">Contactez l'agence</a>
-    <div id="contactForm" class="mt-4">
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col">{{ form_row(form.firstName) }}</div>
-            <div class="col">{{ form_row(form.lastName) }}</div>
+        <!-- Agencies location -->
+        <div class="col-xs-12 col-sm-6">
+            <h3>Nom du bien</h3>
+            <p>{{ bien.nomBien }}</p>
+            <p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:000000000">  {{ myUser.phone}}</a></p>
+            <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:gueyekhalifa826@gmail.com">  {{myUser.email }}</a></p>
+            <p>Ouvert du lundi au vendredi, de 8h00 à 12h00 et de 13h00 à 18h00</p>
+            <h3>Prix du bien</h3>
+            <p>{{ bien.prix }}</p>
+            <p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:000000000">  {{ myUser.phone}}</a></p>
+            <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:agenceexempel@gmail.com">  {{myUser.email }}</a></p>
+            <p>Ouvert du lundi au vendre, de 8h00 à 12h00 et de 13h00 à 18h00</p>
+            <h3>Nombre de chambre</h3>
+            <p>{{ bien.nombrePieces }}</p>
+            <p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:000000000">  {{ myUser.phone}}</a></p>
+            <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:agenceexempel@gmail.com">  {{myUser.email }}</a></p>
+            <input  hidden id="latitude" value=" {{ bien.latitude}}">
+            <input  hidden id="longitude" value="{{ bien.longitude }}">
+            <p>Ouvert du lundi au vendre, de 8h00 à 12h00 et de 13h00 à 18h00</p>
         </div>
-        <div class="row">
-            <div class="col">{{ form_row(form.phone) }}</div>
-            <div class="col">{{ form_row(form.email) }}</div>
+
+        <!-- Contact form -->
+        <div class="col-xs-12 col-sm-6">
+            <h3>Nous contacter</h3>
+            <form class="m-b-2">
+                <fieldset class="form-group">
+                    <label for="firstname">Prénom</label>
+                    <input type="text" class="form-control" id="firstname" name="user_firstname">
+                    <label class="m-t-1" for="lastname">Nom</label>
+                    <input type="text" class="form-control" id="lastname" name="user_lastname">
+                    <label class="m-t-1" for="mail">Adresse mail</label>
+                    <input type="email" class="form-control" id="mail" name="user_email">
+                    <small class="text-muted">Ces informations resteront confidentielles.</small>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="agency">Quelle agence souhaitez-vous contacter ?</label>
+                    <select class="form-control" id="agency" name="contact_agency">
+                        <option value="information_generale">Lille</option>
+                        <option value="devis">Roubaix</option>
+                        <option value="rendez_vous">Villeneuve d'Ascq</option>
+                    </select>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label for="message">Vous pouvez indiquer votre message</label>
+                    <textarea class="form-control" id="message" name="user_message" rows="3"></textarea>
+                </fieldset>
+                <button type="submit" class="btn" id="contact_button">Envoyer</button>
+            </form>
         </div>
-        {{ form_rest(form) }}
-        <div class="form-group">
-            <button class="btn btn-primary">Envoyer</button>
-        </div>
-        {{ form_end(form) }}
-    </div>
     </div>
 
-
-
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/image.js') }}"></script>
 {% endblock %}

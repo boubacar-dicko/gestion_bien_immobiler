@@ -9,10 +9,11 @@
         <p>Avec des bureaux à Lille, Roubaix et Villeneuve d'Ascq, notre agence immobilière est présente dans les grands centres immobliers.
             Placés au coeur de notre secteur d'activité, nous nous déplaçons rapidement et ne sommes jamais loins de vous. N'hésitez pas à nous contacter
             ou à venir directement nous rencontrer.</p>
-
+{% block mapMedina %}
         <!-- Google map -->
         <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1x0ibhXsxE1CRZEZoKa4OLWSs5R8hN_vy" width="640" height="480"></iframe>
-
+{% endblock %}
+        {% block contactAgence %}
         <!-- Column content -->
         <div class="row m-t-3">
 
@@ -66,7 +67,7 @@
                 </form>
             </div>
         </div>
-
+    {% endblock %}
     </section>
 
     <!--
@@ -75,4 +76,8 @@
 
     -->
 
+{% endblock %}
+
+{% block index %}
+    <script src="{{ asset("js/details/details.js") }}"></script>
 {% endblock %}

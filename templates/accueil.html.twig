@@ -26,8 +26,8 @@
                         <div class="carousel-item">
                             <img src="{{ asset("template/img/interieur_large.jpg") }}" alt="canapés dans un salon">
                             <div class="carousel-caption">
-                                <h3>Maison flamande</h3>
-                                <p>Un bien d'exception au coeur de Lille</p>
+                                <h3>Maison meublée</h3>
+                                <p>Un bien d'exception au coeur de Dakar</p>
                             </div>
                         </div>
                     </div>
@@ -117,11 +117,32 @@
                             <td><h4 class="card-title">{{ bien.nomBien }}</h4></td>
                             <td><h6 class="card-subtitle">{{ bien.prix }} Cfa</h6></td>
                         </div>
-                        <figure>
-                            <img src="{{ asset("template/img/house_small.jpg") }}" class="img-fluid hidden-sm-up" alt="maison bleu à vendre">
+
+                           <td> <figure>
+                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="3500">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                    </ol>
+                                    <div class="carousel-inner" role="listbox">
+                                        {% for image in bien.images %}
+                                        <div class="carousel-item active">
+
+                                                <div>
+                                                    <img src="{{ asset('/uploads/' ~ image.name) }}" class="rounded" alt="Image" width="400" height="200">
+                                                </div>
+
+                                            {#  <img src="{{ asset("template/img/salon_large.jpg") }}" alt="salon d'un appartement en vente">#}
+
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </figure></td>
+                            {#  <img src="{{ asset("template/img/house_small.jpg") }}" class="img-fluid hidden-sm-up" alt="maison bleu à vendre">
                             <img src="{{ asset("template/img/house_medium.jpg") }}" class="img-fluid hidden-xs-down hidden-lg-up" alt="maison bleue à vendre">
                             <img src="{{ asset("template/img/house_large.jpg") }}" class="img-fluid hidden-md-down" alt="maison bleu à vendre">
-                        </figure>
+                        </figure>#}
                         <td class="card-block text-xs-center">
                             <td> <p class="card-text">{{ bien.description }}</p></td>
                             <figure class="description">
@@ -141,7 +162,7 @@
             {{ knp_pagination_render(biens) }}
         </div>
         <!-- Start the card content -->
-        <!--div class="row">
+        {#  <div class="row">
 
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <article class="card">
@@ -212,7 +233,7 @@
                 </article>
             </div>
 
-        </div-->
+        </div>#}
 
     </section>
 

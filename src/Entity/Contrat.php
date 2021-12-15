@@ -32,10 +32,22 @@ class Contrat
      */
     private $bienImmobilier;
 
+    const TRANSACTION =[
+        0 => 'OrangeMoney',
+        1 => 'Wave',
+        2 => 'Espece',
+        3 => 'Cheque',
+    ];
+
+    public function __construct()
+    {
+        return $this->dateContrat = new \DateTime('now');
+    }
+
     /**
-     * @ORM\OneToOne(targetEntity=Transaction::class, cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=20)
      */
-    private $tansaction;
+    private  $transaction;
 
     /**
      * @ORM\ManyToOne(targetEntity=AgentImmo::class, inversedBy="contrats")
@@ -89,17 +101,24 @@ class Contrat
         return $this;
     }
 
-    public function getTansaction(): ?Transaction
+    /**
+     * @return mixed
+     */
+    public function getTransaction()
     {
-        return $this->tansaction;
+        return $this->transaction;
     }
 
-    public function setTansaction(?Transaction $tansaction): self
+    /**
+     * @param mixed $transaction
+     * @return Contrat
+     */
+    public function setTransaction($transaction)
     {
-        $this->tansaction = $tansaction;
-
+        $this->transaction = $transaction;
         return $this;
     }
+
 
     public function getAgentImmo(): ?AgentImmo
     {

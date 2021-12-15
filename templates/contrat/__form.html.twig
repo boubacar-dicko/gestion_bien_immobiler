@@ -1,0 +1,22 @@
+
+
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.numeroContrat) }}</div>
+    <div class="col-md-6">{{ form_row(form.transaction) }}</div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">{{ form_row(form.bienImmobilier) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-12">{{ form_row(form.client) }}</div>
+</div>
+ <div class="row">
+    <div class="col-md-12">{{ form_row(form.dateContrat) }}</div>
+</div>
+<button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+
+
+{{ form_end(form) }}
+

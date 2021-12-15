@@ -5,19 +5,50 @@
     <div class="col-md-4">{{ form_row(form.nomBien) }}</div>
     <div class="col-md-2">{{ form_row(form.numeroBi) }}</div>
     <div class="col-md-4">{{ form_row(form.prix) }}</div>
-</div>
-<div class="row">
     <div class="col-md-2">{{ form_row(form.nombrePieces) }}</div>
     <div class="col-md-3">{{ form_row(form.sold) }}</div>
-    <div class="col-md-2">{{ form_row(form.nombreEtage) }}</div>
 </div>
+
 <div class="row">
     <div class="col-md-4">{{ form_row(form.ville) }}</div>
     <div class="col-md-2">{{ form_row(form.surface) }}</div>
     <div class="col-md-4">{{ form_row(form.status) }}</div>
+    <div class="col-md-2">{{ form_row(form.nombreEtage) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-5" id="lat">{{ form_row(form.latitude) }}</div>
+    <div class="col-md-5" id="long">{{ form_row(form.longitude) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-5">{{ form_row(form.images) }}</div>
 </div>
 <div class="row">
     <div class="col-md-10">{{ form_row(form.description) }}</div>
 </div>
 <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+{#  <label for="basic-url">Image</label>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon3">{{ form_row(form.images) }}</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10">{{ form_row(form.description) }}</div>
+</div-->#}
+{# Verifier si la route est "bien.edit" #}
+{% if app.request.attributes.get('_route') == 'bien.edit' %}
+    <h2>Images</h2>
+    {% for image in bi.images %}
+        <div>
+            <img src="{{ asset('/uploads/' ~ image.name) }}" class="rounded" alt="Image" width="150">
+            <a href="{{ path('bien.delete.image', {'id': image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">Supprimer</a>
+        </div>
+    {% endfor %}
+    <div class="container" style="width: 900px; height: 900px">
+        <div id="map"></div>
+    </div>
+{% endif %}
+
 {{ form_end(form) }}
+

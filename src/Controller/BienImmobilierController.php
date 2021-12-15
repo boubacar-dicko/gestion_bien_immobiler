@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BienImmobilier;
 use App\Entity\BienSearch;
 use App\Entity\Contact;
+use App\Entity\Images;
 use App\Entity\User;
 use App\Form\BienImmobilierType;
 use App\Form\BienSearchType;
@@ -14,6 +15,7 @@ use App\Repository\BienImmobilierRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -55,8 +57,23 @@ class BienImmobilierController extends AbstractController
               $userId = $this->getUser()->getId();
                $bi->setUser($this->getUser());
             //---------------
-
-
+            //On recupere les images transmises
+            $images = $form->get('images')->getData();
+           // on boucle sur les images
+            foreach($images as$image )
+            {
+                // on genere un nouveau nom de fichier
+                $fichier = md5(uniqid()). '.' . $image->guessExtension();
+                //on copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                //on stocke l'image dans base de donnees (son nom)
+                $img = new Images();
+                $img->setName($fichier);
+                $bi->addImage($img);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             if($bi->getNomBien()== '0')
             { $bi->setNomBien('Immeuble');
@@ -83,6 +100,32 @@ class BienImmobilierController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
+            //On recupere les images transmises
+            $images = $form->get('images')->getData();
+            // on boucle sur les images
+            foreach($images as$image )
+            {
+                // on genere un nouveau nom de fichier
+                $fichier = md5(uniqid()). '.' . $image->guessExtension();
+                //on copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                //on stocke l'image dans base de donnees (son nom)
+                $img = new Images();
+                $img->setName($fichier);
+                $bi->addImage($img);
+            }
+
+            if($bi->getNomBien()== '0')
+            { $bi->setNomBien('Immeuble');
+            }elseif ($bi->getNomBien()== '1')
+            {$bi->setNomBien('Appartement');
+            }elseif ($bi->getNomBien()== '2'){
+                $bi->setNomBien('Maison');
+            }else{$bi->setNomBien('Magasin');}
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute('bien.liste');
@@ -111,6 +154,21 @@ class BienImmobilierController extends AbstractController
         $contact->setBienImmobilier($bi);
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
+        // On cherche l'agent administrateur de ce bien
+        $user_id =$bi->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $agent = $em->getRepository(User::class)->findAll();
+        foreach ($agent as $k => $v)
+        {
+            if ($v->getId() == $user_id)
+            {
+                $user = $em->getRepository(User::class)->findUserById($v->getId());
+                foreach ($user as $k => $v)
+                {
+                    $myUser = $v;
+                }
+            }
+        }
         if ($form->isSubmitted() && $form->isValid())
         {
             //$notification->notify($contact);
@@ -130,6 +188,7 @@ class BienImmobilierController extends AbstractController
         }
         return $this->render('bien_immobilier/show.html.twig', [
             'bien' => $bi,
+            'myUser' => $myUser,
             'form' => $form->createView()
         ]);
     }
@@ -159,7 +218,7 @@ class BienImmobilierController extends AbstractController
         return $this->render('transaction/location.html.twig', $data);
     }
 
-    #[Route('/listeBienAgent', name: 'bien.agent')]
+    #[Route('/liste/Biens/Agent', name: 'bien.agent')]
     public function listeBienAgent(): Response
     {
         $em = $this->getDoctrine()->getManager();
@@ -179,5 +238,27 @@ class BienImmobilierController extends AbstractController
         }
 
         return $this->render('accueil.html.twig', $data);
+    }
+
+    #[Route('/bien/supprime/image/{id}',"methods=DELETE", name: 'bien.delete.image',)]
+    public function deleteImage(Images $images, Request $request){
+        $data = json_decode($request->getContent(), true);
+        // On verifie si le token est valide
+        if($this->isCsrfTokenValid('delete'.$images->getId(), $data['_token'])){
+            // On recupere le nom de l'image
+            $nom = $images->getName();
+            // On supprime l'image
+            unlink($this->getParameter('images_directory').'/'.$nom);
+
+            // On supprime l'entrée de la base
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($images);
+            $em->flush();
+
+            // On repond en json
+            return new JsonResponse(['success' => 1]);
+        }else{
+            return new JsonResponse(['error' => 'Token Invalide'], 400);
+        }
     }
 }

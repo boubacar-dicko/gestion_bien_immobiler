@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContratController!{% endblock %}
+
+{% block body %}
+{% for contrat in contrats %}
+    <p>{{ contrat.numeroContrat }}</p>
+    <p>{{ contrat.transaction }}</p>
+
+    <p>{{ contrat.bienImmobilier.nomBien }}</p>
+    <p>{{ contrat.bienImmobilier.numeroBi }}</p>
+    <p>{{ contrat.client.nom }}</p>
+    <p>{{ contrat.client.prenom }}</p>
+    {% endfor %}
+{% endblock %}

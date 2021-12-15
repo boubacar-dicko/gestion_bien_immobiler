@@ -56,6 +56,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $bienImmobilier;
 
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $phone;
+
     public function __toString()
     {
         return  $this->id;
@@ -236,6 +241,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $bienImmobilier->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }
