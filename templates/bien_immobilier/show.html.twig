@@ -26,28 +26,40 @@
 
         <!-- Agencies location -->
         <div class="col-xs-12 col-sm-6">
+            <h2 class="font-weight-bold" style="color: #007bff; font-size: medium">INFORMATION SUR LE BIEN</h2>
             <h3>Nom du bien</h3>
             <p>{{ bien.nomBien }}</p>
-            <p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:000000000">  {{ myUser.phone}}</a></p>
-            <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:gueyekhalifa826@gmail.com">  {{myUser.email }}</a></p>
-            <p>Ouvert du lundi au vendredi, de 8h00 à 12h00 et de 13h00 à 18h00</p>
+            {#  <p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:000000000">  {{ myUser.phone}}</a></p>
+            <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:gueyekhalifa826@gmail.com">  {{myUser.email }}</a></p>#}
             <h3>Prix du bien</h3>
             <p>{{ bien.prix }}</p>
-            <p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:000000000">  {{ myUser.phone}}</a></p>
-            <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:agenceexempel@gmail.com">  {{myUser.email }}</a></p>
-            <p>Ouvert du lundi au vendre, de 8h00 à 12h00 et de 13h00 à 18h00</p>
+            <h3>La surface en m²</h3>
+            <p>{{ bien.surface }}</p>
+            <h3>Le Nombre d'Etage</h3>
+            <p>{{ bien.nombreEtage }}</p>
+            <h3>La Ville ou se situe le Bien</h3>
+            <p>{{ bien.ville }}</p>
+            <h3>Le Statut du Bien</h3>
+            {% if bien.status == 1 %}
+                <p>A LOUER</p>
+            {% else %}
+                <p>A VENDRE </p>
+            {% endif %}
+            {#<p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:000000000">  {{ myUser.phone}}</a></p>
+             <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:testdickogueye@gmail.com">  {{myUser.email }}</a></p>#}
             <h3>Nombre de chambre</h3>
             <p>{{ bien.nombrePieces }}</p>
-            <p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:000000000">  {{ myUser.phone}}</a></p>
-            <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:agenceexempel@gmail.com">  {{myUser.email }}</a></p>
             <input  hidden id="latitude" value=" {{ bien.latitude}}">
             <input  hidden id="longitude" value="{{ bien.longitude }}">
-            <p>Ouvert du lundi au vendre, de 8h00 à 12h00 et de 13h00 à 18h00</p>
         </div>
 
         <!-- Contact form -->
         <div class="col-xs-12 col-sm-6">
-            <h3>Nous contacter</h3>
+                <h2 class="font-weight-bold" style="color: #007bff; font-size: medium">INFORMATION SUR L'AGENCE</h2>
+            <p><i class="fa fa-phone green" aria-hidden="true"></i><a href="tel:{{ myUser.phone}}">  {{ myUser.phone}}</a></p>
+            <p><i class="fa fa-envelope purple" aria-hidden="true"></i><a href="mailto:{{ myUser.email }}">  {{ myUser.email }}</a></p>
+            <p>Ouvert du lundi au vendre, de 8h00 à 12h00 et de 13h00 à 18h00</p>
+            {#<h3>Nous contacter</h3>
             <form class="m-b-2">
                 <fieldset class="form-group">
                     <label for="firstname">Prénom</label>
@@ -73,7 +85,7 @@
                     <textarea class="form-control" id="message" name="user_message" rows="3"></textarea>
                 </fieldset>
                 <button type="submit" class="btn" id="contact_button">Envoyer</button>
-            </form>
+            </form>#}
         </div>
     </div>
 

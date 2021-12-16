@@ -3,13 +3,37 @@
 {% block title %}Hello ContratController!{% endblock %}
 
 {% block body %}
-{% for contrat in contrats %}
-    <p>{{ contrat.numeroContrat }}</p>
-    <p>{{ contrat.transaction }}</p>
+    <div class="container">
+        <h2 style="color: black">Liste des contrats</h2>
+    <table class="table table-info">
+        <tr>
+            <th>Numero contrat</th>
+            <th>Type de Transaction</th>
+            <th>Nom du Bien Immobilier</th>
+            <th>Numero du Bien Immobilier</th>
+            <th>Nom du Client</th>
+            <th>Prenom Client</th>
+        </tr>
+            {% for contrat in contrats %}
+        <tr>
 
-    <p>{{ contrat.bienImmobilier.nomBien }}</p>
-    <p>{{ contrat.bienImmobilier.numeroBi }}</p>
-    <p>{{ contrat.client.nom }}</p>
-    <p>{{ contrat.client.prenom }}</p>
-    {% endfor %}
+
+                <td>{{ contrat.numeroContrat }}</td>
+
+                <td>{{ contrat.transaction }}</td>
+
+
+                <td>{{ contrat.bienImmobilier.nomBien }}</td>
+
+                <td>{{ contrat.bienImmobilier.numeroBi }}</td>
+
+
+                <td>{{ contrat.client.nom }}</td>
+
+                <td>{{ contrat.client.prenom }}</td>
+        </tr>
+            {% endfor %}
+
+            </table>
+    </div>
 {% endblock %}
