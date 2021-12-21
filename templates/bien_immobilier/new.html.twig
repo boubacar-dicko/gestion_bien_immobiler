@@ -7,4 +7,8 @@
         <h1>Creation de Bien</h1>
         {{ include ('bien_immobilier/__form.html.twig', {form:form, button:'Creer'})  }}
     </div>
+
+{% endblock %}
+{% block index %}
+    <script src="{{ asset("js/add.js") }}"></script>
 {% endblock %}

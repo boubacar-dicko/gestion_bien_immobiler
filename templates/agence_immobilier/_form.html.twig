@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">{{ form_row(form.nomAgence) }}</div>
+        <div class="col-md-2">{{ form_row(form.adresseAgence) }}</div>
+        <div class="col-md-4">{{ form_row(form.telephone) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-5" id="lat">{{ form_row(form.latitude) }}</div>
+        <div class="col-md-5" id="long">{{ form_row(form.longitude) }}</div>
+    </div>
+    {% if app.request.attributes.get('_route') == 'agence_immobilier_edit' %}
+        <div class="container" style="width: 900px; height: 500px">
+            <div id="map"></div>
+        </div>
+    {% endif %}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+</div>
+{{ form_end(form) }}
+{% block index %}
+    <script src="{{ asset("js/agenceMap/indexAgence.js") }}"></script>
+{% endblock %}

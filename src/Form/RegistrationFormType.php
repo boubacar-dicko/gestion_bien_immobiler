@@ -21,6 +21,7 @@ class RegistrationFormType extends AbstractType
             ->add('prenom')
             ->add('phone')
             ->add('email')
+            ->add('agenceImmobilier')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

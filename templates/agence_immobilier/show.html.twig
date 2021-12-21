@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AgenceImmobilier{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>AgenceImmobilier</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ agence_immobilier.id }}</td>
+            </tr>
+            <tr>
+                <th>NomAgence</th>
+                <td>{{ agence_immobilier.nomAgence }}</td>
+            </tr>
+            <tr>
+                <th>AdresseAgence</th>
+                <td>{{ agence_immobilier.adresseAgence }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ agence_immobilier.telephone }}</td>
+            </tr>
+            <tr>
+                <td><input  hidden id="latitude" value=" {{ agence_immobilier.latitude}}"></td>
+                <td><input  hidden id="longitude" value="{{ agence_immobilier.longitude }}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('agence_immobilier_index') }}">back to list</a>
+
+    <a href="{{ path('agence_immobilier_edit', {'id': agence_immobilier.id}) }}">edit</a>
+
+    {{ include('agence_immobilier/_delete_form.html.twig') }}
+    <div class="col-xs-12 col-sm-6">
+        <div class="" style="width: 550px; height: 450px">
+            <div id="map"></div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block index %}
+    <script src="{{ asset("js/agenceMap/details.js") }}"></script>
+{% endblock %}

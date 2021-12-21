@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AgenceImmobilier{% endblock %}
+
+{% block body %}
+    <h1>Create new AgenceImmobilier</h1>
+
+    {{ include('agence_immobilier/_form.html.twig') }}
+
+    <a href="{{ path('agence_immobilier_index') }}">back to list</a>
+{% endblock %}

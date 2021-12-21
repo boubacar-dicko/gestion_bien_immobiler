@@ -61,6 +61,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $phone;
 
+    /**
+     * @ORM\OneToOne(targetEntity=AgenceImmobilier::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $agenceImmobilier;
+
     public function __toString()
     {
         return  $this->id;
@@ -253,6 +259,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getAgenceImmobilier(): ?AgenceImmobilier
+    {
+        return $this->agenceImmobilier;
+    }
+
+    public function setAgenceImmobilier(AgenceImmobilier $agenceImmobilier): self
+    {
+        $this->agenceImmobilier = $agenceImmobilier;
 
         return $this;
     }

@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-md-10">{{ form_row(form.description) }}</div>
 </div>
-<button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+
 {#  <label for="basic-url">Image</label>
 <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -45,10 +45,14 @@
             <a href="{{ path('bien.delete.image', {'id': image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">Supprimer</a>
         </div>
     {% endfor %}
-    <div class="container" style="width: 900px; height: 900px">
-        <div id="map"></div>
-    </div>
-{% endif %}
 
+{% endif %}
+<div class="container" style="width: 900px; height: 500px">
+    <div id="map"></div>
+</div>
+<div class="container">
+<button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+</div>
 {{ form_end(form) }}
+
 
